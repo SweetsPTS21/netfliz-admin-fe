@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
-import { Modal, Form, Input, InputNumber, Row, Col } from 'antd'
+import { Modal, Form, Input, InputNumber, Row, Col, Divider } from 'antd'
 import { useMovieContext } from '@/contexts/MovieContext'
 import { RatedSelect } from './selects/RatedSelect'
 import { TypeSelect } from './selects/TypeSelect'
 import { GenreSelect } from './selects/GenreSelect'
 import { LanguageSelect } from './selects/LanguageSelect'
 import { CountrySelect } from './selects/CountrySelect'
+import PosterUpload from './upload/PosterUpload'
+import GalleryUpload from './upload/GalleryUpload'
 
 const { TextArea } = Input
 
@@ -44,8 +46,14 @@ const MovieForm = () => {
     const handleSubmit = async () => {
         try {
             const values = await form.validateFields()
+            const { posters, gallery, ...rest } = values
+            const images = [
+                ...(Array.isArray(posters) ? posters : []),
+                ...(Array.isArray(gallery) ? gallery : []),
+            ]
             const movieInput = {
-                ...values,
+                ...rest,
+                images,
             }
 
             if (isEditing) {
@@ -135,6 +143,17 @@ const MovieForm = () => {
                     </Col>
                     <Col span={12}>
                         <CountrySelect />
+                    </Col>
+                </Row>
+
+                <Divider>Images</Divider>
+
+                <Row gutter={16}>
+                    <Col span={8}>
+                        <PosterUpload form={form} />
+                    </Col>
+                    <Col span={16}>
+                        <GalleryUpload form={form} />
                     </Col>
                 </Row>
             </Form>

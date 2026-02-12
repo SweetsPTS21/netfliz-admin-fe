@@ -51,6 +51,10 @@ export const API_ENDPOINTS = {
     RECENT: `${API_BASE_URL}/dashboard/recent`,
     ANALYTICS: `${API_BASE_URL}/dashboard/analytics`,
   },
+  FILE: {
+    UPLOAD_POSTER: `${API_BASE_URL}/files/upload-poster`,
+    UPLOAD_GALLERY: `${API_BASE_URL}/files/upload-gallery`,
+  }
 }
 
 // Frontend routes
