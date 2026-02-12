@@ -1,0 +1,836 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   Theme tokens (Tailwind v4 @theme)
+   ============================================================ */
+@theme {
+  --color-surface-900: #0a0a14;
+  --color-surface-800: #12121e;
+  --color-surface-700: #1e1e2e;
+  --color-primary-500: #e50914;
+  --color-primary-600: #b20710;
+  --color-primary-400: #ff2d3b;
+  --color-accent-purple: #7c3aed;
+  --color-accent-blue: #2563eb;
+  --font-family-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ============================================================
+   Base reset
+   ============================================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--admin-bg, var(--color-surface-900));
+  color: var(--admin-text, #e4e4e7);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================================
+   LOGIN PAGE
+   ============================================================ */
+
+/* ---------- Page layout ---------- */
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--color-surface-900);
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Hero panel (left) ---------- */
+.login-hero {
+  display: none;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-surface-800), var(--color-surface-900));
+}
+
+@media (min-width: 1024px) {
+  .login-hero {
+    display: flex;
+    flex: 0 0 55%;
+    align-items: center;
+    justify-content: center;
+    padding: 64px;
+  }
+}
+
+/* Gradient edge line */
+.login-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom,
+      transparent,
+      rgba(229, 9, 20, 0.3) 30%,
+      rgba(229, 9, 20, 0.5) 50%,
+      rgba(229, 9, 20, 0.3) 70%,
+      transparent);
+}
+
+.login-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+}
+
+/* ---------- Floating orbs ---------- */
+.login-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.login-orb--1 {
+  width: 400px;
+  height: 400px;
+  background: var(--color-primary-500);
+  top: -80px;
+  left: -100px;
+  animation: orbFloat1 14s ease-in-out infinite;
+}
+
+.login-orb--2 {
+  width: 300px;
+  height: 300px;
+  background: var(--color-accent-purple);
+  bottom: -60px;
+  right: -60px;
+  animation: orbFloat2 18s ease-in-out infinite;
+}
+
+.login-orb--3 {
+  width: 200px;
+  height: 200px;
+  background: var(--color-accent-blue);
+  top: 50%;
+  left: 50%;
+  animation: orbFloat3 12s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(40px, 60px) scale(1.15);
+  }
+}
+
+@keyframes orbFloat2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-50px, -40px) scale(1.1);
+  }
+}
+
+@keyframes orbFloat3 {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-30%, -60%) scale(1.2);
+  }
+}
+
+/* ---------- Logo ---------- */
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 48px;
+}
+
+.login-logo__icon {
+  display: flex;
+  filter: drop-shadow(0 0 20px rgba(229, 9, 20, 0.4));
+}
+
+.login-logo__text {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---------- Hero typography ---------- */
+.login-hero__title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+  color: #fafafa;
+  margin-bottom: 20px;
+}
+
+.login-hero__title--accent {
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-hero__subtitle {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #a1a1aa;
+  margin-bottom: 40px;
+}
+
+/* ---------- Feature badges ---------- */
+.login-hero__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.login-feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #d4d4d8;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.login-feature-badge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(229, 9, 20, 0.3);
+  transform: translateY(-1px);
+}
+
+.login-feature-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  box-shadow: 0 0 8px rgba(229, 9, 20, 0.6);
+}
+
+/* ---------- Form wrapper (right) ---------- */
+.login-form-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--color-surface-900);
+}
+
+@media (min-width: 1024px) {
+  .login-form-wrapper {
+    flex: 0 0 45%;
+    padding: 64px;
+  }
+}
+
+/* ---------- Login card ---------- */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 36px;
+  border-radius: 20px;
+  background: rgba(30, 30, 46, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 8px 40px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 24px;
+    border-radius: 16px;
+  }
+}
+
+/* Mobile logo */
+.login-card__mobile-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 1024px) {
+  .login-card__mobile-logo {
+    display: none;
+  }
+}
+
+/* Card typography */
+.login-card__title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #fafafa;
+  margin-bottom: 8px;
+}
+
+.login-card__subtitle {
+  font-size: 14px;
+  color: #71717a;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+/* ---------- Form labels ---------- */
+.login-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #a1a1aa;
+  letter-spacing: 0.2px;
+}
+
+/* ---------- Input icons ---------- */
+.login-input-icon {
+  color: #52525b !important;
+  font-size: 16px !important;
+  margin-right: 4px;
+}
+
+/* ---------- Input overrides ---------- */
+.login-input,
+.login-input.ant-input-outlined,
+.login-input .ant-input {
+  background: rgba(255, 255, 255, 0.03) !important;
+  transition: all 0.25s ease !important;
+}
+
+.login-input:hover,
+.login-input.ant-input-outlined:hover,
+.login-input .ant-input:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.login-input:focus,
+.login-input.ant-input-outlined:focus,
+.login-input.ant-input-affix-wrapper-focused {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ---------- Options row ---------- */
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  margin-top: -4px;
+}
+
+.login-checkbox .ant-checkbox+span {
+  font-size: 13px;
+  color: #a1a1aa;
+}
+
+.login-forgot {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-primary-500);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.login-forgot:hover {
+  color: var(--color-primary-400);
+}
+
+/* ---------- Submit button ---------- */
+.login-submit-btn {
+  height: 50px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  border: none !important;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600)) !important;
+  transition: all 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-submit-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 30px rgba(229, 9, 20, 0.45) !important;
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-500)) !important;
+}
+
+.login-submit-btn:active {
+  transform: translateY(0) !important;
+}
+
+/* ---------- Footer ---------- */
+.login-card__footer {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  text-align: center;
+}
+
+.login-card__footer-text {
+  font-size: 12px;
+  color: #3f3f46;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Antd global overrides for dark login ---------- */
+.login-page .ant-form-item-label>label {
+  color: #a1a1aa !important;
+}
+
+.login-page .ant-input-password .ant-input-suffix .ant-input-password-icon {
+  color: #52525b !important;
+}
+
+.login-page .ant-input-password .ant-input-suffix .ant-input-password-icon:hover {
+  color: #a1a1aa !important;
+}
+
+/* ============================================================
+   THEME VARIABLES
+   ============================================================ */
+
+:root,
+[data-theme="dark"] {
+  --admin-bg: #0a0a14;
+  --admin-surface: #12121e;
+  --admin-surface-hover: rgba(255, 255, 255, 0.04);
+  --admin-surface-active: rgba(255, 255, 255, 0.02);
+  --admin-border: rgba(255, 255, 255, 0.04);
+  --admin-border-hover: rgba(255, 255, 255, 0.08);
+  --admin-text: #e4e4e7;
+  --admin-text-secondary: #a1a1aa;
+  --admin-text-muted: #3f3f46;
+  --admin-text-heading: #fafafa;
+  --admin-header-bg: rgba(10, 10, 20, 0.6);
+  --admin-shadow: rgba(0, 0, 0, 0.3);
+  --admin-logo-text-from: #fff;
+  --admin-logo-text-to: #a1a1aa;
+  --admin-sider-bg: #12121e;
+  --admin-selected-bg: rgba(229, 9, 20, 0.12);
+}
+
+[data-theme="light"] {
+  --admin-bg: #f5f5f5;
+  --admin-surface: #ffffff;
+  --admin-surface-hover: rgba(0, 0, 0, 0.03);
+  --admin-surface-active: rgba(0, 0, 0, 0.02);
+  --admin-border: rgba(0, 0, 0, 0.06);
+  --admin-border-hover: rgba(0, 0, 0, 0.12);
+  --admin-text: #1f2937;
+  --admin-text-secondary: #6b7280;
+  --admin-text-muted: #9ca3af;
+  --admin-text-heading: #111827;
+  --admin-header-bg: rgba(255, 255, 255, 0.85);
+  --admin-shadow: rgba(0, 0, 0, 0.08);
+  --admin-logo-text-from: #1f2937;
+  --admin-logo-text-to: #6b7280;
+  --admin-sider-bg: #ffffff;
+  --admin-selected-bg: rgba(229, 9, 20, 0.08);
+}
+
+/* ============================================================
+   ADMIN LAYOUT
+   ============================================================ */
+
+.admin-layout {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ---------- Sider ---------- */
+.admin-sider {
+  background: var(--admin-sider-bg) !important;
+  border-right: 1px solid var(--admin-border);
+  position: fixed !important;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  overflow: auto;
+}
+
+.admin-sider__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-sider__logo-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 12px rgba(229, 9, 20, 0.35));
+}
+
+.admin-sider__logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--admin-logo-text-from), var(--admin-logo-text-to));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+}
+
+/* Menu */
+.admin-menu {
+  background: transparent !important;
+  border-inline-end: none !important;
+  padding: 8px 12px;
+}
+
+.admin-menu .ant-menu-item {
+  border-radius: 10px !important;
+  margin-bottom: 4px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  color: var(--admin-text-secondary) !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-menu .ant-menu-item:hover {
+  background: var(--admin-surface-hover) !important;
+  color: var(--admin-text) !important;
+}
+
+.admin-menu .ant-menu-item-selected {
+  background: var(--admin-selected-bg) !important;
+  color: var(--color-primary-500) !important;
+}
+
+.admin-menu .ant-menu-item-selected::after {
+  display: none;
+}
+
+/* ---------- Header ---------- */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px !important;
+  height: 64px !important;
+  background: var(--admin-header-bg) !important;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--admin-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.admin-header__trigger {
+  color: var(--admin-text-secondary) !important;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+}
+
+.admin-header__trigger:hover {
+  color: var(--admin-text) !important;
+  background: var(--admin-surface-hover) !important;
+}
+
+.admin-header__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-header__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.admin-header__user:hover {
+  background: var(--admin-surface-hover);
+}
+
+.admin-header__avatar {
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600)) !important;
+}
+
+.admin-header__username {
+  color: var(--admin-text-secondary) !important;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .admin-header__username {
+    display: none;
+  }
+}
+
+/* ---------- Theme toggle ---------- */
+.admin-header__theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--admin-surface-hover);
+  border: 1px solid var(--admin-border);
+  transition: all 0.3s ease;
+}
+
+.theme-icon {
+  font-size: 16px;
+  color: var(--admin-text-muted);
+  transition: all 0.3s ease;
+}
+
+.theme-icon--active {
+  color: #faad14;
+}
+
+[data-theme="dark"] .theme-icon--active {
+  color: #1890ff;
+}
+
+.theme-switch.ant-switch {
+  min-width: 32px !important;
+  /* height: 18px !important; */
+  background: var(--admin-text-muted) !important;
+}
+
+.theme-switch.ant-switch-checked {
+  background: #1890ff !important;
+}
+
+/* ---------- Content ---------- */
+.admin-content {
+  padding: 24px;
+  margin-left: 260px;
+  min-height: calc(100vh - 64px - 56px);
+  background: var(--admin-bg);
+  transition: margin-left 0.2s ease, background 0.3s ease;
+}
+
+/* When sider is collapsed (80px) */
+.admin-layout .ant-layout-sider-collapsed~.ant-layout .admin-content {
+  margin-left: 80px;
+}
+
+.admin-layout .ant-layout-sider-collapsed~.ant-layout .admin-header {
+  margin-left: 0;
+}
+
+/* ---------- Footer ---------- */
+.admin-footer {
+  text-align: center;
+  padding: 16px 24px !important;
+  background: transparent !important;
+  margin-left: 260px;
+  transition: margin-left 0.2s ease;
+}
+
+.admin-layout .ant-layout-sider-collapsed~.ant-layout .admin-footer {
+  margin-left: 80px;
+}
+
+.admin-footer__text {
+  font-size: 13px;
+  color: var(--admin-text-muted) !important;
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+.dashboard {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.dashboard__header {
+  margin-bottom: 24px;
+}
+
+.dashboard__title {
+  color: var(--admin-text-heading) !important;
+  margin-bottom: 4px !important;
+}
+
+.dashboard__stat-card {
+  background: var(--admin-surface) !important;
+  border: 1px solid var(--admin-border) !important;
+  border-radius: 16px !important;
+  transition: all 0.3s ease !important;
+}
+
+.dashboard__stat-card:hover {
+  border-color: var(--admin-border-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--admin-shadow) !important;
+}
+
+.dashboard__stat-card-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dashboard__stat-label {
+  font-size: 13px !important;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.dashboard__stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  font-size: 22px;
+}
+
+.dashboard__stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--admin-border);
+}
+
+.dashboard__recent {
+  background: var(--admin-surface) !important;
+  border: 1px solid var(--admin-border) !important;
+  border-radius: 16px !important;
+}
+
+/* ============================================================
+   MANAGEMENT PAGES (Movies / Users)
+   ============================================================ */
+
+.management-page {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.management-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.management-page__title {
+  color: var(--admin-text-heading) !important;
+  margin-bottom: 4px !important;
+}
+
+.management-table .ant-table {
+  background: var(--admin-surface) !important;
+  border-radius: 16px !important;
+  border: 1px solid var(--admin-border);
+}
+
+.management-table .ant-table-thead>tr>th {
+  background: var(--admin-surface-active) !important;
+  border-bottom: 1px solid var(--admin-border) !important;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--admin-text-secondary) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.management-table .ant-table-tbody>tr>td {
+  border-bottom: 1px solid var(--admin-border) !important;
+}
+
+.management-table .ant-table-tbody>tr:hover>td {
+  background: var(--admin-surface-hover) !important;
+}
+
+/* Action buttons */
+.action-btn {
+  border-radius: 8px !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.action-btn--edit:hover {
+  color: var(--color-accent-blue) !important;
+  background: rgba(37, 99, 235, 0.1) !important;
+}
+
+.action-btn--warning:hover {
+  color: #faad14 !important;
+  background: rgba(250, 173, 20, 0.1) !important;
+}
+
+.action-btn--delete:hover {
+  background: rgba(229, 9, 20, 0.1) !important;
+}
+
+/* Pagination */
+.management-table .ant-pagination {
+  margin-top: 16px !important;
+}
