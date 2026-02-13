@@ -8,7 +8,7 @@ import { LanguageSelect } from './selects/LanguageSelect'
 import { CountrySelect } from './selects/CountrySelect'
 import PosterUpload from './upload/PosterUpload'
 import GalleryUpload from './upload/GalleryUpload'
-
+import { mapMovieToFormValues, mapFormValuesToMovie } from './mapper/mapper'
 const { TextArea } = Input
 
 const MovieForm = () => {
@@ -20,24 +20,9 @@ const MovieForm = () => {
 
     useEffect(() => {
         if (isFormOpen && editingMovie) {
-            form.setFieldsValue({
-                ...editingMovie,
-                genre: editingMovie.genre
-                    ? Array.isArray(editingMovie.genre)
-                        ? editingMovie.genre
-                        : editingMovie.genre.split(',').map((g) => g.trim())
-                    : [],
-                languages: editingMovie.languages
-                    ? Array.isArray(editingMovie.languages)
-                        ? editingMovie.languages
-                        : editingMovie.languages.split(',').map((l) => l.trim())
-                    : [],
-                countries: editingMovie.countries
-                    ? Array.isArray(editingMovie.countries)
-                        ? editingMovie.countries
-                        : editingMovie.countries.split(',').map((c) => c.trim())
-                    : [],
-            })
+            form.setFieldsValue(
+                mapMovieToFormValues(editingMovie)
+            )
         } else if (isFormOpen) {
             form.resetFields()
         }
@@ -46,15 +31,7 @@ const MovieForm = () => {
     const handleSubmit = async () => {
         try {
             const values = await form.validateFields()
-            const { posters, gallery, ...rest } = values
-            const images = [
-                ...(Array.isArray(posters) ? posters : []),
-                ...(Array.isArray(gallery) ? gallery : []),
-            ]
-            const movieInput = {
-                ...rest,
-                images,
-            }
+            const movieInput = mapFormValuesToMovie(values)
 
             if (isEditing) {
                 await updateMovie(editingMovie.id, movieInput)
@@ -74,7 +51,7 @@ const MovieForm = () => {
             onOk={handleSubmit}
             okText={isEditing ? 'Update' : 'Create'}
             confirmLoading={creating || updating}
-            width={720}
+            width={800}
             destroyOnHidden
         >
             <Form form={form} layout="vertical" requiredMark={false} style={{ marginTop: 16 }}>
@@ -146,7 +123,7 @@ const MovieForm = () => {
                     </Col>
                 </Row>
 
-                <Divider>Images</Divider>
+                <Divider className="upload-divider">Media</Divider>
 
                 <Row gutter={16}>
                     <Col span={8}>

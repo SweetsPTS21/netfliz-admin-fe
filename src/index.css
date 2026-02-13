@@ -834,3 +834,219 @@ body {
 .management-table .ant-pagination {
   margin-top: 16px !important;
 }
+
+/* ============================================================
+   UPLOAD SECTIONS (Poster & Gallery)
+   ============================================================ */
+
+/* ---------- Section wrapper ---------- */
+.upload-section {
+  border-radius: 14px;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-section__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.upload-section__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--color-primary-500);
+  background: rgba(229, 9, 20, 0.1);
+}
+
+.upload-section__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--admin-text-heading);
+  letter-spacing: -0.2px;
+}
+
+.upload-section__hint {
+  font-size: 12px;
+  color: var(--admin-text-muted);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+/* ---------- Custom Dropzone button ---------- */
+.upload-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 16px;
+  color: var(--admin-text-secondary);
+  transition: all 0.25s ease;
+}
+
+.upload-dropzone__icon {
+  font-size: 28px;
+  color: var(--admin-text-muted);
+  transition: all 0.25s ease;
+}
+
+.upload-dropzone__text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--admin-text-secondary);
+}
+
+.upload-dropzone__specs {
+  font-size: 11px;
+  color: var(--admin-text-muted);
+}
+
+/* ---------- Antd Upload overrides (dark theme) ---------- */
+
+/* Poster: force list wrapper to full width block layout */
+.upload-poster.ant-upload-wrapper {
+  display: block !important;
+  width: 100% !important;
+}
+
+.upload-poster .ant-upload-list.ant-upload-list-picture-card {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+}
+
+/* Poster: taller card */
+.upload-poster .ant-upload.ant-upload-select {
+  width: 100% !important;
+  height: 220px !important;
+  border-radius: 12px !important;
+  border: 2px dashed rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  transition: all 0.3s ease !important;
+  margin: 0 !important;
+}
+
+.upload-poster .ant-upload.ant-upload-select:hover {
+  border-color: rgba(229, 9, 20, 0.35) !important;
+  background: rgba(229, 9, 20, 0.04) !important;
+}
+
+.upload-poster .ant-upload.ant-upload-select:hover .upload-dropzone__icon {
+  color: var(--color-primary-500);
+  transform: translateY(-2px);
+}
+
+/* Poster: uploaded image card */
+.upload-poster .ant-upload-list-item-container {
+  width: 100% !important;
+  height: 220px !important;
+  margin: 0 !important;
+}
+
+.upload-poster .ant-upload-list-item {
+  border-radius: 12px !important;
+  border: 1px solid var(--admin-border) !important;
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+/* Gallery: landscape cards */
+.upload-gallery .ant-upload.ant-upload-select {
+  width: 140px !important;
+  height: 90px !important;
+  border-radius: 10px !important;
+  border: 2px dashed rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  transition: all 0.3s ease !important;
+}
+
+.upload-gallery .ant-upload.ant-upload-select:hover {
+  border-color: rgba(229, 9, 20, 0.35) !important;
+  background: rgba(229, 9, 20, 0.04) !important;
+}
+
+.upload-gallery .ant-upload.ant-upload-select:hover .upload-dropzone__icon {
+  color: var(--color-primary-500);
+}
+
+/* Gallery: uploaded image cards */
+.upload-gallery .ant-upload-list-item-container {
+  width: 140px !important;
+  height: 90px !important;
+}
+
+.upload-gallery .ant-upload-list-item {
+  border-radius: 10px !important;
+  border: 1px solid var(--admin-border) !important;
+}
+
+/* Gallery dropzone: smaller content */
+.upload-gallery .upload-dropzone {
+  min-height: 80px;
+  gap: 4px;
+  padding: 8px;
+}
+
+.upload-gallery .upload-dropzone__icon {
+  font-size: 22px;
+}
+
+.upload-gallery .upload-dropzone__text {
+  font-size: 12px;
+}
+
+/* ---------- Shared upload list overrides ---------- */
+.upload-poster .ant-upload-list-item-actions,
+.upload-gallery .ant-upload-list-item-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.upload-poster .ant-upload-list-item-thumbnail img,
+.upload-gallery .ant-upload-list-item-thumbnail img {
+  object-fit: cover !important;
+}
+
+[data-theme="light"] .upload-section {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .upload-poster .ant-upload.ant-upload-select,
+[data-theme="light"] .upload-gallery .ant-upload.ant-upload-select {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  background: rgba(0, 0, 0, 0.01) !important;
+}
+
+[data-theme="light"] .upload-poster .ant-upload.ant-upload-select:hover,
+[data-theme="light"] .upload-gallery .ant-upload.ant-upload-select:hover {
+  border-color: rgba(229, 9, 20, 0.3) !important;
+  background: rgba(229, 9, 20, 0.03) !important;
+}
+
+/* ---------- Images divider ---------- */
+.upload-divider.ant-divider {
+  border-color: var(--admin-border) !important;
+  color: var(--admin-text-secondary) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}

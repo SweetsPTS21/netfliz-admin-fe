@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Form, Image, message, Typography, Upload } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { Form, Image, message, Upload } from 'antd'
+import { PlusOutlined, AppstoreOutlined } from '@ant-design/icons'
 import ImgCrop from 'antd-img-crop'
 import { getBase64 } from '@/utils/file'
 import { IMAGE_TYPE } from '@/constants/imageType'
 import { uploadGallery } from '@/api/upload'
-
-const { Text } = Typography
 
 const GalleryUpload = ({ form, maxCount = 10, maxFileSize = 5 }) => {
     const [previewOpen, setPreviewOpen] = useState(false)
@@ -93,28 +91,41 @@ const GalleryUpload = ({ form, maxCount = 10, maxFileSize = 5 }) => {
     }
 
     const uploadButton = (
-        <button style={{ border: 0, background: 'none' }} type="button">
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </button>
+        <div className="upload-dropzone">
+            <PlusOutlined className="upload-dropzone__icon" />
+            <span className="upload-dropzone__text">Add image</span>
+        </div>
     )
 
     return (
-        <div>
-            <Form.Item name="gallery">
-                <ImgCrop rotationSlider quality={1} aspect={16 / 9}>
+        <div className="upload-section">
+            <div className="upload-section__header">
+                <div className="upload-section__icon">
+                    <AppstoreOutlined />
+                </div>
+                <span className="upload-section__title">Gallery</span>
+            </div>
+
+            <Form.Item name="gallery" style={{ marginBottom: 0 }}>
+                <ImgCrop rotationSlider quality={0.8} aspect={16 / 9}>
                     <Upload
+                        className="upload-gallery"
                         customRequest={handleUpload}
                         listType="picture-card"
                         fileList={fileList}
                         onPreview={handlePreview}
                         onChange={handleChange}
+                        accept="image/*"
                     >
                         {fileList.length >= maxCount ? null : uploadButton}
                     </Upload>
                 </ImgCrop>
-                <Text type="secondary">Gallery (16:9 ratio, max {maxCount} images, {maxFileSize}MB each)</Text>
             </Form.Item>
+
+            <div className="upload-section__hint">
+                16:9 ratio • Max {maxCount} images • {maxFileSize}MB each
+            </div>
+
             {previewImage && (
                 <Image
                     styles={{ root: { display: 'none' } }}

@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Form, Image, message, Typography, Upload } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { Form, Image, message, Upload } from 'antd'
+import { CloudUploadOutlined, PictureOutlined } from '@ant-design/icons'
 import ImgCrop from 'antd-img-crop'
 import { getBase64 } from '@/utils/file'
 import { IMAGE_TYPE } from '@/constants/imageType'
 import { uploadPoster } from '@/api/upload'
-
-const { Text } = Typography
 
 const PosterUpload = ({ form, maxFileSize = 5 }) => {
     const [previewOpen, setPreviewOpen] = useState(false)
@@ -115,28 +113,38 @@ const PosterUpload = ({ form, maxFileSize = 5 }) => {
     }
 
     const uploadButton = (
-        <button style={{ border: 0, background: 'none' }} type="button">
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </button>
+        <div className="upload-dropzone">
+            <CloudUploadOutlined className="upload-dropzone__icon" />
+            <span className="upload-dropzone__text">Click or drag image</span>
+            <span className="upload-dropzone__specs">2:3 ratio • Max {maxFileSize}MB</span>
+        </div>
     )
 
     return (
-        <div>
-            <Form.Item name="posters">
-                <ImgCrop rotationSlider quality={1} aspect={2 / 3}>
+        <div className="upload-section">
+            <div className="upload-section__header">
+                <div className="upload-section__icon">
+                    <PictureOutlined />
+                </div>
+                <span className="upload-section__title">Poster</span>
+            </div>
+
+            <Form.Item name="posters" style={{ marginBottom: 0, flex: 1 }}>
+                <ImgCrop rotationSlider quality={0.8} aspect={2 / 3}>
                     <Upload
+                        className="upload-poster"
                         customRequest={handleUpload}
                         listType="picture-card"
                         fileList={fileList}
                         onPreview={handlePreview}
                         onChange={handleChange}
+                        accept="image/*"
                     >
                         {fileList.length >= 1 ? null : uploadButton}
                     </Upload>
                 </ImgCrop>
-                <Text type="secondary">Poster (2:3 ratio, max {maxFileSize}MB)</Text>
             </Form.Item>
+
             {previewImage && (
                 <Image
                     styles={{ root: { display: 'none' } }}
